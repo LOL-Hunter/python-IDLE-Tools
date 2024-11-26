@@ -2,7 +2,7 @@
 
 ## Features
 
-* type ``exit`` for exit python.
+* type ``exit`` to exit python.
 * type ``clear`` or ``cls`` to clear python-console.
 * use specified imports like all math methods (default).
 
