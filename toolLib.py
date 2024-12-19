@@ -2,7 +2,7 @@ import os, sys
 from colorama import init as _init, Fore as _c
 
 _init()
-VERSION = 1.2
+VERSION = 1.4
 
 def _run():
     try:
@@ -13,9 +13,10 @@ def _run():
 
 
 class _CONF:
-    _CLEAR_ON_START = None
-    _CLEAR_ON_EXIT = None
-    _CAN_EXIT_CTRL_C = None
+    CLEAR_ON_START = None
+    CLEAR_ON_EXIT = None
+    CAN_EXIT_CTRL_C = None
+    CONFIG_PATH = None
 
 def _lock():
     _lockVar = os.environ.get("RUN_LOCK", "false")
@@ -25,7 +26,7 @@ def _lock():
     return False
 
 def _title(_s=False):
-    if not _s or _CONF._CLEAR_ON_START: os.system("clear")
+    if not _s or _CONF.CLEAR_ON_START: os.system("clear")
     c = sys.version_info
     print(_c.GREEN+f"Python-{c.major}.{c.minor}.{c.micro}"+_c.RESET)
     print(_c.GREEN+f"Tool-Version: {VERSION} | \u00A9 Robert Langhammmer"+_c.RESET)
