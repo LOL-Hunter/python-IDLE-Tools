@@ -1,6 +1,5 @@
 import os
 from matplotlib import pyplot as _pl
-#_pl.style.use('dark_background')
 _CWD = os.getcwd()
 os.chdir(os.path.split(__file__)[0])
 from toolLib import (_CONF,
@@ -9,6 +8,7 @@ from toolLib import (_CONF,
                      _title,
                      _lock,
                      _run, _c)
+from numpy.linalg import det, inv
 os.chdir(_CWD)
 # python-IDLE-Tools
 
@@ -66,6 +66,18 @@ class Vec3:
         )
     def length(self):
         return sqrt(pow(self._vec[0], 2)+pow(self._vec[1], 2)+pow(self._vec[2], 2))
+    def clone(self):
+        return Vec3(
+            self._vec[0],
+            self._vec[1],
+            self._vec[2]
+        )
+    def round(self, n=4):
+        v1 = self.clone()
+        v1._vec[0] = round(v1._vec[0], n)
+        v1._vec[1] = round(v1._vec[1], n)
+        v1._vec[2] = round(v1._vec[2], n)
+        return v1
     def __len__(self):
         return self.length()
     def __add__(self, other):
@@ -95,7 +107,8 @@ class Vec3:
                 )
         else:
             raise NotImplemented()
-
+    def __repr__(self):
+        return f"({self._vec[0]}, {self._vec[1]}, {self._vec[2]})"
     def draw(self):
         _pl.rcParams['grid.color'] = "white"
         fig = _pl.figure()
@@ -126,16 +139,6 @@ class Vec3:
 
         fig.savefig(os.path.join(_CONF.CONFIG_PATH, "plot.png"), transparent=True)
         os.system("kitten icat --clear --transfer-mode=memory --stdin=no " + os.path.join(_CONF.CONFIG_PATH, "plot.png"))
-
-
-
-    def copy(self):
-        return Vec3(*self._vec)
-
-
-a = Vec3(2, 2, 2).draw
-
-
 class Mat:
     def __init__(self, *a):
         self._mat = [[0]]
@@ -183,6 +186,25 @@ class Mat:
                 _mat[j][i] = self._mat[i][j]
         self._mat = _mat
         return self
+    def fill(self, num:int):
+        mat = self.clone()
+        m, n = mat.size().split("x")
+        for x in range(int(m)):
+            for y in range(int(n)):
+                mat._mat[x][y] = num
+        return mat
+    def det(self)->int:
+        return det(self._mat)
+    def inv(self):
+        return Mat(list(i) for i in inv(self._mat))
+    def clone(self):
+        return Mat([i.copy() for i in self._mat])
+    def round(self, n):
+        mat = Mat(self.size())
+        for indx, i in zip(range(len(self._mat)), self):
+            for indy, k in zip(range(len(i)), i):
+                mat[indx][indy] = round(self[indx][indy], n)
+        return mat
     def __repr__(self):
         s = []
         l = []
@@ -240,7 +262,7 @@ class Mat:
 
                 return mat
             else:
-                print(_c.RED + f"Cannot multiply! Size does not Match: {type(self.size())} and {type(other.size())}" + _c.RESET)
+                print(_c.RED + f"Cannot multiply! Size does not Match: {self.size()} and {other.size()}" + _c.RESET)
         else:
             print(_c.RED + f"Type does not match! Cannot multiply {type(self)} and {type(other)}" + _c.RESET)
     def __pow__(self, power, modulo=None):
@@ -251,7 +273,15 @@ class Mat:
                     mat[indx][indy] = k**power
             return mat
         print(_c.RED + f"Cannot pow! Type does not Match: {type(self)} and {type(power)}" + _c.RESET)
-
+class Mati(Mat):
+    def __init__(self, size:str):
+        super().__init__(size)
+        n, m = size.split("x")
+        if n != m:
+            print(f"Wrong size! {n}x{m}")
+            return
+        for n in range(int(m)):
+            self._mat[n][n] = 1
 
 #### USER DEFINED COMMANDS ####
 clear = cls = _Printer(

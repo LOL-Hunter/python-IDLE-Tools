@@ -2,7 +2,7 @@ import os, sys
 from colorama import init as _init, Fore as _c
 
 _init()
-VERSION = 1.4
+VERSION = 1.5
 
 def _run():
     try:
