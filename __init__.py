@@ -1,3 +1,4 @@
+print("\nLoading...")
 import os
 from matplotlib import pyplot as _pl
 _CWD = os.getcwd()

@@ -2,7 +2,7 @@ import os, sys
 from colorama import init as _init, Fore as _c
 
 _init()
-VERSION = 1.5
+VERSION = 1.7
 
 def _run():
     try:
@@ -29,7 +29,7 @@ def _title(_s=False):
     if not _s or _CONF.CLEAR_ON_START: os.system("clear")
     c = sys.version_info
     print(_c.GREEN+f"Python-{c.major}.{c.minor}.{c.micro}"+_c.RESET)
-    print(_c.GREEN+f"Tool-Version: {VERSION} | \u00A9 Robert Langhammmer"+_c.RESET)
+    print(_c.GREEN+f"IDLE-Tool-Version: {VERSION} | \u00A9 Robert Langhammmer"+_c.RESET)
 
 
 class _Printer:
