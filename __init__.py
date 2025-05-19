@@ -7,7 +7,6 @@ from toolLib import (_CONF,
                      _Printer,
                      _Exit,
                      _title,
-                     _lock,
                      _run, _c)
 from numpy.linalg import det, inv
 os.chdir(_CWD)
@@ -23,6 +22,8 @@ from math import *
 ############
 
 #### USER DEFINED FUNCTIONS ####
+ln = lambda x: log(x, e)
+
 def egcd(a, b, x=1, xx=0, y=0, yy=1):
     c = lambda a, b, q:(a-q*b)
     print(f"{a=}, {b=}, {x=}, {xx=}, {y=}, {yy=}")
