@@ -27,6 +27,8 @@ arcsin = lambda x: 1/sin(x)
 arccos = lambda x: 1/cos(x)
 arctan = lambda x: 1/tan(x)
 
+binom = lambda a, b: factorial(a) / (factorial(b) * factorial(a - b))
+
 def egcd(a, b, x=1, xx=0, y=0, yy=1):
     c = lambda a, b, q:(a-q*b)
     print(f"{a=}, {b=}, {x=}, {xx=}, {y=}, {yy=}")
